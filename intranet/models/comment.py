@@ -4,7 +4,7 @@ from django.db import models
 
 
 # TODO: 대댓글 생각 해보고 나중에 변경하기!
-class Comment(models.Model):
+class CommentModel(models.Model):
     id = models.AutoField(primary_key=True)
     post = models.ForeignKey(PostModel, on_delete=models.CASCADE)
     author = models.ForeignKey(

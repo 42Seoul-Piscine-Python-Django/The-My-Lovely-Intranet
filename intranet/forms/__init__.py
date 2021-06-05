@@ -1,5 +1,5 @@
-from .comment import *
-from .login import *
-from .post import *
-from .profile import *
-from .register import *
+# from .comment import CommentForm
+from .post import PostForm
+from .profile import ProfileForm
+from .login import LoginForm
+from .user import UserChangeForm, UserCreationForm

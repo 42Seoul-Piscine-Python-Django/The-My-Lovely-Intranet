@@ -122,3 +122,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Upload files (ProfileImages... ?)
+# https://docs.djangoproject.com/en/3.2/ref/settings/#media-root
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+AUTH_USER_MODEL = 'intranet.User'

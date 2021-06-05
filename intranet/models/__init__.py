@@ -1,3 +1,3 @@
-from .comment import *
-from .post import *
-from .user import *
+from .comment import CommentModel
+from .post import PostModel
+from .user import User
