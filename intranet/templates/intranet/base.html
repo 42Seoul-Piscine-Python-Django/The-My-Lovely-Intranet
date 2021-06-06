@@ -1,26 +1,29 @@
-{% load bootstrap5 %}
-{% load static %}
+{% load static %} {% load bootstrap4 %}
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{% static 'css/lovelystyle.css' %}">
-  <script src="{% static 'js/lovely.js' %}"></script>
-  {% bootstrap_css %}
-  {% bootstrap_javascript %}
-  <title>{% block title %}{% endblock title %}TheMyLovelyIntranet</title>
-</head>
-<body>
-{% include 'intranet/nav.html' %}
-<div class="container">
-{% bootstrap_messages %}
-{% block content %}
-<h1>Please Replace here!!</h1>
-{% endblock content %}
-<div>
-{% include 'intranet/footer.html' %}
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'css/lovelystyle.css' %}" />
+    {% bootstrap_javascript jquery='full' %}
+    <script src="{% static 'js/lovely.js' %}"></script>
+    <script>
+      $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+      });
+    </script>
+    <title>{% block title %}{% endblock title %}TheMyLovelyIntranet</title>
+  </head>
+  <body>
+    {% include 'intranet/nav.html' %}
+    <div class="container py-2" style="min-height: calc(100vh - 56px - 56px)">
+      {% bootstrap_messages %} {% block content %}
+      <h1>Please Replace here!!</h1>
+      {% endblock content %}
+    </div>
+    {% include 'intranet/footer.html' %}
+  </body>
 </html>
