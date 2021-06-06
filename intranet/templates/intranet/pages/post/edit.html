@@ -1,0 +1,20 @@
+{% extends 'intranet/base.html' %}
+
+{% load bootstrap5 %}
+
+{% block title %}Edit Post | {% endblock title %}
+
+{% block content %}
+<div>
+  <h1>Edit Post!</h1>
+  <div>
+    <form action="{% url 'intranet:post' %}" method="post" class="form">
+      {% csrf_token %} {% bootstrap_form form %}
+      {% buttons %}
+        {% bootstrap_button "Save" button_type="submit" button_class="btn-primary" %}
+        <a class="btn btn-secondary" href="{% url 'intranet:main' %}" >Cancle</a>
+      {% endbuttons %}
+    </form>
+  </div>
+</div>
+{% endblock content %}
