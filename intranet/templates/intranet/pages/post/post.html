@@ -3,19 +3,14 @@
 {% load bootstrap5 %}
 
 
-{% block title %}New Post | {% endblock title %}
+{% block title %}{{ object.title }} | {% endblock title %}
 
 {% block content %}
 <div>
-  <h1>New Post!</h1>
+  <h1>{{ object.title }}</h1>
   <div>
-    <form action="{% url 'intranet:post' %}" method="post" class="form">
-      {% csrf_token %} {% bootstrap_form form %}
-      {% buttons %}
-        {% bootstrap_button "Save" button_type="submit" button_class="btn-primary" %}
-        <a class="btn btn-secondary" href="{% url 'intranet:main' %}" >Cancle</a>
-      {% endbuttons %}
-    </form>
+    <span>{{ object.author }}</span><span>{{ object.creationDate }}</span><span>{{ object.updateDate }}</span>
+    <div>{{ object.content }}</div>
   </div>
 </div>
 {% endblock content %}

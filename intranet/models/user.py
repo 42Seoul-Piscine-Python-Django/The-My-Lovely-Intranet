@@ -7,14 +7,18 @@ import os
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, name, surname, password=None):
+    def create_user(self, id, email, password=None):
+        if not id:
+            raise ValueError('Users must have an id')
+
         if not email:
             raise ValueError('Users must have an email')
 
         user = self.model(
+            id=id,
             email=self.normalize_email(email),
-            name=name,
-            surname=surname,
+            name="",
+            surname="",
             description=""
         )
 
@@ -22,11 +26,10 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, name, surname, password):
+    def create_superuser(self, id, email, password):
         user = self.create_user(
-            email,
-            name=name,
-            surname=surname,
+            id=id,
+            email=email,
             password=password,
         )
         user.is_admin = True
@@ -38,14 +41,15 @@ def path_and_rename(instance, filename):
     upload_to = 'profile'
     ext = filename.split('.')[-1]
     if instance.pk:
-        filename = '{}-{}.{}'.format(instance.email, timezone.now(), ext)
+        filename = '{}-{}.{}'.format(instance.id, timezone.now(), ext)
     else:
         filename = '{}-{}.{}'.format(uuid4().hex, timezone.now(), ext)
     return os.path.join(upload_to, filename)
 
 
 class User(AbstractBaseUser):
-    email = models.EmailField(max_length=128, unique=True, default="") 
+    id = models.CharField(max_length=64, primary_key=True, unique=True, null=False)
+    email = models.EmailField(max_length=128, unique=True, null=False)
     name = models.CharField(max_length=64, blank=True, null=False)
     surname = models.CharField(max_length=64, blank=True, null=False)
     description = models.TextField(max_length=512, blank=True, null=False)
@@ -57,10 +61,9 @@ class User(AbstractBaseUser):
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'id'
     REQUIRED_FIELDS = [
-        'name',
-        'surname',
+        'email',
     ]
 
     def __str__(self):

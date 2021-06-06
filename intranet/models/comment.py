@@ -9,7 +9,7 @@ class CommentModel(models.Model):
     id = models.AutoField(primary_key=True)
     post = models.ForeignKey(PostModel, on_delete=models.CASCADE, related_name="comments")
     author = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, to_field='email')
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, to_field='id')
     comment = models.CharField(
         max_length=512, null=False)
     creationDate = models.DateTimeField(

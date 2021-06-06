@@ -9,7 +9,7 @@ from intranet.models import User
 
 
 class UserLoginFrom(forms.Form):
-    email = forms.EmailField()
+    id = forms.CharField()
     password = forms.CharField(widget=PasswordInput)
 
     class AuthFail(Exception):
@@ -17,17 +17,13 @@ class UserLoginFrom(forms.Form):
             return 'authenticate fail'
 
     def login(self, request: HttpRequest):
-        email = self.cleaned_data['email']
+        id = self.cleaned_data['id']
         password = self.cleaned_data['password']
-        print(
-            email, password
-        )
         user = authenticate(
             request=request,
-            email=email,
+            id=id,
             password=password,
         )
-        print(user)
         if user is None:
             raise self.AuthFail()
         return login(request, user)
@@ -40,7 +36,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'name', 'surname')
+        fields = ('id', 'email')
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -62,7 +58,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'password', 'name', 'surname', 'description',
+        fields = ('id', 'email', 'password', 'name', 'surname', 'description',
                   'is_active', 'is_admin')
 
     def clean_password(self):
