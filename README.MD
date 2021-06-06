@@ -99,11 +99,140 @@
 - [x] 프로젝트 분석
 - [x] 프로젝트 기본틀 작성
 - [x] 공부해야 하는 목록 작성
-- [ ] 공부.....!! -> WIKI에 공부한 내용 정리해서 올리기!
-- [ ] 다음날 상세 계획 하기!
+- [x] 공부.....!! -> WIKI에 공부한 내용 정리해서 올리기!
+- [x] 다음날 상세 계획 하기!
+
+#### 06.06
+
+- [x] 간단 명세 작성 완료!
+- [ ] 명세대로 다시 form model 작성하기!
+- [ ] 담당 part 정하기!
+- [ ] 개발!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 #### ... 추후 작성
 
 #### 06.08
 
 - [ ] 제출하기!
+
+---
+
+### 🧾 간단 명세
+
+`/login` → login page
+
+`/register` → register page
+
+---
+
+### login required → `/login`
+
+`/` → post list
+
+`get`
+
+`pagenum` → pagenation 용도로 활용한다. 없으면 첫번째 페이지!
+
+### 포럼 기능!
+
+`/post`
+
+- `get` → 새글쓰기 렌더링!
+
+- `post` → 새글 생성
+
+  - `title` → 글 타이틀!
+
+  - `content` → 글 내용!
+
+  - ? `images` → 글 내부 사진!
+
+  - ---
+
+  - `success` → `/post/<id>`
+
+  - `error` → 화면에 에러 이유 출력!
+
+`post/<id>`
+
+- `get` → 글 렌더링!
+
+`post/<id>/edit` → 해당 소유자만 할 수 있음. or 관리자
+
+- `get`  → 글 수정 화면 렌더링!
+
+- `post` → 글 수정!
+
+  - `title`
+
+  - `content`
+
+  - ? `images`
+
+  - ---
+
+  - `success` → `/post/<id>`
+
+  - `error` → 화면에 에러 이유 출력!
+
+`post/<id>/delete` → 해당 소유자만 할 수 있음. or 관리자
+
+- `post` → 글 삭제!
+
+  - `success` → `/`
+
+  - `error` → 화면에 에러 이유 출력!
+
+`post/<id>/comment`
+
+- `post` → 댓글 작성!
+
+  - `parent_id` → 부모 댓글!
+
+  - `comment` → 댓글 내용!
+
+  - ---
+
+  - `success` → `/post/<id>`
+
+  - `error` → 화면에 에러 이유 출력!
+
+`post/<id>/comment/delete` → 해당 소유자만 할 수 있음. or 관리자
+
+- `post` → 댓글 삭제!
+
+  - ---
+
+  - `success` → `/post/<id>`
+
+  - `error` → 화면에 에러 이유 출력!
+
+---
+
+### 유저 프로파일!
+
+`/profile/<id>` → ? 해당 유저만 접근 가능 or 관리자!
+
+- `get` → 프로파일 렌더링!
+
+`/profile/<id>/edit` → ? 해당 유저만 접근 가능 or 관리자!
+
+- `get` → 수정 화면 렌더링!
+
+- `post` → 프로파일 수정
+
+  - `name` → 이름
+
+  - `surname` → 성
+
+  - `description` → 설명
+
+  - `profile_image` → 프사 → 잘 찍을 것!
+
+---
+
+### 추가 기능
+
+`/logout` → session flush!!!!!
+
+`/admin` →  접근 가능한 사람은 관리자!
