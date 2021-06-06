@@ -7,12 +7,12 @@ import os
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, username, name, surname, password=None):
-        if not username:
-            raise ValueError('Users must have an username')
+    def create_user(self, email, name, surname, password=None):
+        if not email:
+            raise ValueError('Users must have an email')
 
         user = self.model(
-            username=username,
+            email=self.normalize_email(email),
             name=name,
             surname=surname,
             description=""
@@ -22,9 +22,9 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, name, surname, password):
+    def create_superuser(self, email, name, surname, password):
         user = self.create_user(
-            username,
+            email,
             name=name,
             surname=surname,
             password=password,
@@ -38,14 +38,14 @@ def path_and_rename(instance, filename):
     upload_to = 'profile'
     ext = filename.split('.')[-1]
     if instance.pk:
-        filename = '{}-{}.{}'.format(instance.username, timezone.now(), ext)
+        filename = '{}-{}.{}'.format(instance.email, timezone.now(), ext)
     else:
         filename = '{}-{}.{}'.format(uuid4().hex, timezone.now(), ext)
     return os.path.join(upload_to, filename)
 
 
 class User(AbstractBaseUser):
-    username = models.CharField(max_length=64, unique=True, null=False)
+    email = models.EmailField(max_length=128, unique=True, default="") 
     name = models.CharField(max_length=64, blank=True, null=False)
     surname = models.CharField(max_length=64, blank=True, null=False)
     description = models.TextField(max_length=512, blank=True, null=False)
@@ -57,14 +57,14 @@ class User(AbstractBaseUser):
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'username'
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = [
         'name',
         'surname',
     ]
 
     def __str__(self):
-        return self.username
+        return self.email
 
     def has_perm(self, perm, obj=None):
         return True

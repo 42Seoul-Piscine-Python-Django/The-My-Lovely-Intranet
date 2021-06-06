@@ -12,6 +12,9 @@ class CommentForm(forms.ModelForm):
         model = CommentModel
         fieds = ['comment']
 
+    def __init__(self, *args, **kwargs):
+        super(CommentForm, self).__init__(*args, **kwargs)
+        self.fields['comment'].widget.attrs = {'placeholder':'Comment here...', 'class':'form-control', 'rows':'5'}
     # TODO: 댓글 Clean Method 완성하기! 필요 없을 지도?????
     def clean(self) -> Dict[str, Any]:
         return super().clean()
