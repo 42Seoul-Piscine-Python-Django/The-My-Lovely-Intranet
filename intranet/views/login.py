@@ -12,7 +12,7 @@ class LoginView(FormView):
 
     def get_success_url(self) -> str:
         next = self.request.GET.get('next', None)
-        if next:
+        if next is not None:
             return next
         return self.success_url
 

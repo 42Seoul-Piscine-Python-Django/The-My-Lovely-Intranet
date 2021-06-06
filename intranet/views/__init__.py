@@ -1,3 +1,4 @@
-from .main import Main
-from .post import PostView
-from .login import LoginView
+from intranet.views.main import Main
+from intranet.views.post import PostView, PostDetailView
+from intranet.views.login import LoginView
+from intranet.views.logout import LogoutView

@@ -6,7 +6,7 @@ class PostModel(models.Model):
     title = models.CharField(max_length=128, null=False)
     # TODO: User model에 대한 검증 후 다시 확인 하기!
     author = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, to_field='email')
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, to_field='id')
     content = models.TextField(null=False)
     creationDate = models.DateTimeField(auto_now_add=True, null=False)
     updateDate = models.DateTimeField(auto_now=True, null=False)
