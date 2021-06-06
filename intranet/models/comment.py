@@ -20,7 +20,7 @@ class CommentModel(models.Model):
 # yongjule - add comment (i dont know its work or not)
     parent = models.ForeignKey("self", null=True, blank=True, on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
- 
+
     class Meta:
         ordering = ('creationDate',)
 
