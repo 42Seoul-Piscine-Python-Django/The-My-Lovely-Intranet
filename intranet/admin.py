@@ -3,7 +3,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from .forms import UserChangeForm, UserCreationForm
-from .models import User, PostModel, CommentModel 
+from .models import User, PostModel, CommentModel
 
 
 class UserAdmin(BaseUserAdmin):
@@ -29,17 +29,24 @@ class UserAdmin(BaseUserAdmin):
     ordering = ('email',)
     filter_horizontal = ()
 
-@admin.register(PostModel)
-class PostModelAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'content', 'creationDate', 'updateDate')
-    list_filter = ('creationDate', 'updateDate', 'author')
-    search_fields = ('title', 'content')
 
 @admin.register(CommentModel)
 class CommentModelAdmin(admin.ModelAdmin):
     list_display = ('author', 'active', 'parent', 'post', 'comment')
     list_filter = ('active', 'creationDate', 'updateDate')
     search_fields = ('author', 'comment')
+
+
+class PostCommentAdmin(admin.StackedInline):
+    model = CommentModel
+
+
+@admin.register(PostModel)
+class PostModelAdmin(admin.ModelAdmin):
+    list_display = ('title', 'author', 'content', 'creationDate', 'updateDate')
+    list_filter = ('creationDate', 'updateDate', 'author')
+    search_fields = ('title', 'content')
+    inlines = (PostCommentAdmin, )
 
 
 admin.site.register(User, UserAdmin)
