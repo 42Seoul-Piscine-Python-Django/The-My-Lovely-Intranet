@@ -22,9 +22,12 @@
             >Home</a
           >
         </li>
+        {% if user.is_authenticated %}
+        {% else %}
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link" href="{% url 'intranet:login' %}">Login</a>
         </li>
+        {% endif %}
         <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
