@@ -2,11 +2,10 @@ from typing import Any
 from django import http
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django.http.response import HttpResponse, HttpResponseBase
+from django.http.response import HttpResponseBase
 from django.views.generic import RedirectView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import logout
-from intranet.forms.user import UserLoginFrom
 
 
 class LogoutView(LoginRequiredMixin, RedirectView):
@@ -15,4 +14,5 @@ class LogoutView(LoginRequiredMixin, RedirectView):
 
     def get(self, request: http.HttpRequest, *args: Any, **kwargs: Any) -> HttpResponseBase:
         logout(request)
+        messages.success(request, "Logout Success!")
         return super().get(request, *args, **kwargs)

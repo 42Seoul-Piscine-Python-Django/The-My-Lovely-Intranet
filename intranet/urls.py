@@ -9,5 +9,5 @@ urlpatterns = [
     path('logout/', views.LogoutView.as_view(), name='logout'),
     path('post/', views.PostView.as_view(), name='post'),
     path('post/<int:post_id>', views.PostDetailView.as_view(), name='post-detail'),
-    # path('post/<int:post_id>', views.PostDetailView.as_view(), name='post-detail'),
+    path('post/<int:post_id>/edit', views.PostEditView.as_view(), name='post-edit'),
 ]
