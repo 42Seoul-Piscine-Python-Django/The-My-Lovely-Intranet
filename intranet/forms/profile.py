@@ -1,7 +1,7 @@
 from typing import Any, Dict
 from django import forms
 from django.forms.widgets import Textarea
-from intranet.models import ProfileModel, User
+from intranet.models import User
 
 
 class ProfileForm(forms.ModelForm):
