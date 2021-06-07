@@ -1,12 +1,13 @@
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 from django import http
 from django.contrib import messages
 from django.http import request
-from django.http.response import Http404, HttpResponse
+from django.http.response import Http404, HttpResponse, HttpResponseBase
 from django.urls.base import reverse_lazy, reverse
 from django.views.generic import FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
+from django.views.generic.base import RedirectView
 from django.views.generic.detail import DetailView
 from intranet.models import PostModel, CommentModel
 from intranet.forms import PostForm, CommentForm
@@ -14,7 +15,6 @@ from intranet.forms import PostForm, CommentForm
 
 class PostUserCheckMixin:
     def dispatch(self, request: http.HttpRequest, post_id,  *args: Any, **kwargs: Any) -> HttpResponse:
-        self.post_id = post_id
         try:
             post: PostModel = PostModel.objects.get(id=post_id)
         except PostModel.DoesNotExist:
@@ -52,13 +52,23 @@ class PostDetailView(LoginRequiredMixin, DetailView):
     model = PostModel
     pk_url_kwarg = 'post_id'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post: PostModel = context['object']
+        if post.is_active == False:
+            raise Http404()
+        context["comment_form"] = CommentForm()
+        return context
+
+
 class PostEditView(LoginRequiredMixin, PostUserCheckMixin, FormView):
     template_name = 'intranet/pages/post/edit.html'
     form_class = PostForm
     login_url = reverse_lazy('intranet:login')
 
     def get_success_url(self) -> str:
-        return reverse('intranet:post-detail', kwargs={'post_id': self.post_id})
+        return reverse('intranet:post-detail',
+                       kwargs={'post_id': self.kwargs.get('post_id')})
 
     def get_initial(self) -> Dict[str, Any]:
         post: PostModel = self.instance
@@ -75,3 +85,16 @@ class PostEditView(LoginRequiredMixin, PostUserCheckMixin, FormView):
 
     def form_invalid(self, form: PostForm) -> HttpResponse:
         return super().form_invalid(form)
+
+
+class PostDeleteView(LoginRequiredMixin, PostUserCheckMixin, RedirectView):
+    url = reverse_lazy('intranet:main')
+
+    def get(self, request: http.HttpRequest, *args: Any, **kwargs: Any) -> HttpResponseBase:
+        self.instance.is_active = False
+        for comment in self.instance.get_comments():
+            comment.is_active = False
+            comment.save()
+        self.instance.save()
+        messages.info(request, "Delete post success!")
+        return super().get(request, *args, **kwargs)

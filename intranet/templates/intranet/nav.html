@@ -3,31 +3,20 @@
     <a class="navbar-brand" href="{% url 'intranet:main' %}"
       >Lovely My 💔 Intranet</a
     >
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
     <div class="container-fluid" id="navbarSupportedContent">
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a
-              class="nav-link active"
-              aria-current="page"
-              href="{% url 'intranet:main' %}"
-              >Home</a
-            >
-          </li>
         </ul>
       </div>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            aria-current="page"
+            href="{% url 'intranet:post' %}"
+            >New Post</a
+          >
+        </li>
         {% if user.is_authenticated %}
         <li class="nav-item dropdown">
           <a
@@ -40,18 +29,22 @@
             {{ user }}
           </a>
           <ul class="dropdown-menu">
-            <li class="dropdown-item">
-              <a href="{% url 'intranet:logout' %}">Logout</a>
-            </li>
+            <li><a class="dropdown-item" href="{% url 'intranet:profile-detail' user.id %}">Profile</a></li>
+            {% if user.is_staff %}
+              <li><a class="dropdown-item" href="/admin">Admin</a></li>
+            {% endif %}
             <li><hr class="dropdown-divider" /></li>
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li>
+              <a class="dropdown-item" href="{% url 'intranet:logout' %}">Logout</a>
+            </li>
           </ul>
         </li>
         {% else %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'intranet:login' %}">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'intranet:register' %}">Register</a>
         </li>
         {% endif %}
       </ul>
