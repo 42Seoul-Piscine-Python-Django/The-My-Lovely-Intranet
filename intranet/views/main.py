@@ -6,7 +6,7 @@ from django.shortcuts import render
 
 
 class Main(LoginRequiredMixin ,ListView):
-    login_url = reverse_lazy('intrnet:login')
+    login_url = reverse_lazy('intranet:login')
     paginate_by = 10
     template_name = 'intranet/pages/main/main.html'
     model = PostModel
