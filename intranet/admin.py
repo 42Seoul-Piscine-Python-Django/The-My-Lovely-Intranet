@@ -48,6 +48,5 @@ class PostModelAdmin(admin.ModelAdmin):
     search_fields = ('title', 'content')
     inlines = (PostCommentAdmin, )
 
-
 admin.site.register(User, UserAdmin)
 admin.site.unregister(Group)

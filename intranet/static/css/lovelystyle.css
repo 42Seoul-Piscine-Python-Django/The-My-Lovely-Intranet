@@ -1,0 +1,30 @@
+html {
+  height: 100%;
+  background-color: #0D9DE6;
+}
+ 
+nav {
+  margin: 0 auto;
+}
+ 
+nav ul {
+  text-align: center;
+}
+ 
+nav ul li {
+  display: inline-block;
+}
+ 
+nav ul li a {
+  padding: 18px; 
+  text-transform:uppercase;
+  color: rgba(0, 0, 0, 1);
+  font-size: 18px;
+  text-decoration: none;
+  display: block;
+}
+ 
+nav ul li a:hover {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3), inset 0 0 1px rgba(255, 255, 255, 0.3);
+  color: rgba(0, 0, 0, 1);
+}
