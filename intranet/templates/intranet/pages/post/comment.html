@@ -1,0 +1,15 @@
+<div style="margin-left: 24px;">
+	<div>
+	{{comment.author}}
+		{% if comment.parent.author%} to {{comment.parent.author}} {% endif %}
+	</div>
+	<p>
+		{{comment}}
+	</p>
+	{% for comment in comment.get_comments %}
+	 {% include 'intranet/pages/post/comment.html' with comment=comment %}
+	{% endfor %}
+	<form >
+		{% %}
+	</form>
+</div>

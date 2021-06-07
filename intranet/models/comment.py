@@ -1,10 +1,8 @@
-from intranet.models.post import PostModel
-from django.conf import settings
 from django.db import models
+from django.conf import settings
+from intranet.forms import CommentForm
 
-from .post import PostModel
 
-# TODO: 대댓글 생각 해보고 나중에 변경하기!
 class CommentModel(models.Model):
     id = models.AutoField(primary_key=True)
     post = models.ForeignKey(PostModel, on_delete=models.CASCADE, related_name="comments")
@@ -17,8 +15,7 @@ class CommentModel(models.Model):
     updateDate = models.DateTimeField(
         auto_now=True, null=False)
 
-# yongjule - add comment (i dont know its work or not)
-    parent = models.ForeignKey("self", null=True, blank=True, on_delete=models.CASCADE)
+    parent = models.ForeignKey("self", null=True, blank=True, on_delete=models.CASCADE) #CASCADE 할지 말지 생각해보기
     active = models.BooleanField(default=True)
 
     class Meta:
@@ -29,3 +26,8 @@ class CommentModel(models.Model):
 
     def get_comments(self):
         return CommentModel.objects.filter(parent=self).filter(active=True)
+
+    def get_replayform(self):
+        form = CommentForm()
+        form.fields['parent'] = self.id
+        return form

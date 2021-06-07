@@ -1,3 +1,2 @@
-from .comment import CommentModel
-from .post import PostModel
+from .post import PostModel, CommentModel
 from .user import User

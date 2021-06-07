@@ -8,8 +8,8 @@ from django.views.generic import FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.views.generic.detail import DetailView
-from intranet.models import PostModel
-from intranet.forms import PostForm
+from intranet.models import PostModel, CommentModel
+from intranet.forms import PostForm, CommentForm
 
 
 class PostUserCheckMixin:
@@ -51,7 +51,6 @@ class PostDetailView(LoginRequiredMixin, DetailView):
     login_url = reverse_lazy('intranet:login')
     model = PostModel
     pk_url_kwarg = 'post_id'
-
 
 class PostEditView(LoginRequiredMixin, PostUserCheckMixin, FormView):
     template_name = 'intranet/pages/post/edit.html'
