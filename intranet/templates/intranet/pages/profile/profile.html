@@ -1,0 +1,20 @@
+{% extends 'intranet/base.html' %}
+
+{% load bootstrap4 %}
+{% block title %}Profile {% endblock title %}
+
+{% block content %}
+<div>
+  <h1>Profile!</h1>
+  <div>
+		<p>id : {{object.user_id}}</p>
+		<p>Email : {{object.email}}</p>
+		<p>name: {{object.name}}</p>
+		<p>surname : {{object.surname}}</p>
+		{% if object.profile_image  %}
+		<div class='h-25;w-10;'><img src="{{object.profile_image.url}}" width=100px class='rounded-circle'></div>
+		{% endif %}
+		<p>description: {{object.description}}</p>
+  </div>
+</div>
+{% endblock content %}

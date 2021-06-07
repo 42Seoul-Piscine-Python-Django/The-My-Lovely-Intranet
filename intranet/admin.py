@@ -3,7 +3,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from .forms import UserChangeForm, UserCreationForm
-from .models import User, PostModel, CommentModel
+from .models import User, PostModel, CommentModel, ProfileModel
 
 
 class UserAdmin(BaseUserAdmin):
@@ -48,6 +48,11 @@ class PostModelAdmin(admin.ModelAdmin):
     search_fields = ('title', 'content')
     inlines = (PostCommentAdmin, )
 
+class ProfileModelAdmin(admin.ModelAdmin):
+    list_display = ('id', 'email', 'name')
+    list_filter = ('id', 'email', 'name')
+    search_fields = ('id', 'email')
 
+admin.site.register(ProfileModel)
 admin.site.register(User, UserAdmin)
 admin.site.unregister(Group)
