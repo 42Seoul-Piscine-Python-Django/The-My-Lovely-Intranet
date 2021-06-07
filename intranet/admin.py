@@ -32,8 +32,8 @@ class UserAdmin(BaseUserAdmin):
 
 @admin.register(CommentModel)
 class CommentModelAdmin(admin.ModelAdmin):
-    list_display = ('author', 'active', 'parent', 'post', 'comment')
-    list_filter = ('active', 'creationDate', 'updateDate')
+    list_display = ('author', 'is_active', 'parent', 'post', 'comment')
+    list_filter = ('is_active', 'creationDate', 'updateDate')
     search_fields = ('author', 'comment')
 
 

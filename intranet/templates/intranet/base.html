@@ -7,14 +7,45 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% bootstrap_css %}
-    <link rel="stylesheet" href="{% static 'css/lovelystyle.css' %}" />
+    <link rel="stylesheet" href="{% static 'intranet/css/lovelystyle.css' %}" />
     {% bootstrap_javascript jquery='full' %}
-    <script src="{% static 'js/lovely.js' %}"></script>
+    <script src="{% static 'intranet/js/lovely.js' %}"></script>
     <script>
       $(function () {
         $('[data-toggle="tooltip"]').tooltip();
       });
     </script>
+    <style>
+      .comment {
+        border-left: solid;
+        border-left-width: 0.125rem;
+        border-color: #dddddd;
+        padding-left: 10px;
+      }
+      .comment-body {
+        font-size: 1rem;
+      }
+
+      .reply {
+        margin-left: 12px;
+      }
+
+      .reply small {
+        color: #b7b4b4;
+      }
+      .reply small:hover {
+        color: #424242;
+        cursor: pointer;
+      }
+      .dots {
+        height: 4px;
+        width: 4px;
+        margin-bottom: 2px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+      }
+    </style>
     <title>{% block title %}{% endblock title %}TheMyLovelyIntranet</title>
   </head>
   <body>

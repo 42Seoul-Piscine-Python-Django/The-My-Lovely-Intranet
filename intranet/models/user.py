@@ -1,3 +1,5 @@
+from intranet.models.comment import CommentModel
+from intranet.models.post import PostModel
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.utils import timezone
@@ -74,6 +76,12 @@ class User(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+
+    def get_post_count(self):
+        return PostModel.objects.filter(author=self,is_active=True).count()
+
+    def get_comment_count(self):
+        return CommentModel.objects.filter(author=self,is_active=True).count()
 
     @property
     def is_staff(self):

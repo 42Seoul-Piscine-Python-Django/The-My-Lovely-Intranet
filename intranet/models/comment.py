@@ -1,13 +1,14 @@
 from django.db import models
 from django.conf import settings
-from intranet.forms import CommentForm
+from intranet.models.post import PostModel
 
 
 class CommentModel(models.Model):
     id = models.AutoField(primary_key=True)
-    post = models.ForeignKey(PostModel, on_delete=models.CASCADE, related_name="comments")
+    post = models.ForeignKey(
+        PostModel, on_delete=models.CASCADE, related_name="comments")
     author = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, to_field='id')
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, to_field='id', related_name='comments')
     comment = models.CharField(
         max_length=512, null=False)
     creationDate = models.DateTimeField(
@@ -15,8 +16,9 @@ class CommentModel(models.Model):
     updateDate = models.DateTimeField(
         auto_now=True, null=False)
 
-    parent = models.ForeignKey("self", null=True, blank=True, on_delete=models.CASCADE) #CASCADE 할지 말지 생각해보기
-    active = models.BooleanField(default=True)
+    parent = models.ForeignKey(
+        "self", null=True, blank=True, on_delete=models.CASCADE)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         ordering = ('creationDate',)
@@ -25,9 +27,10 @@ class CommentModel(models.Model):
         return self.comment
 
     def get_comments(self):
-        return CommentModel.objects.filter(parent=self).filter(active=True)
+        return CommentModel.objects.filter(parent=self, is_active=True)
 
     def get_replayform(self):
+        from intranet.forms.comment import CommentForm
         form = CommentForm()
-        form.fields['parent'] = self.id
+        form.fields['parent'].initial = self.id
         return form
