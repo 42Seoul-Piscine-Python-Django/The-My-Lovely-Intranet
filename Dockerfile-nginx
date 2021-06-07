@@ -1,0 +1,16 @@
+FROM nginx
+
+WORKDIR /usr/src/app
+
+RUN openssl rand -out /root/.rnd -hex 256 && \
+  openssl genrsa -out /theMyLovelyIntranet.localhost.key 4096 && \
+  openssl req -x509 -nodes -days 365 \
+  -key /theMyLovelyIntranet.localhost.key \
+  -out /theMyLovelyIntranet.localhost.crt \
+  -subj "/C=KR/ST=SEOUL/L=Gaepo-dong/O=42Seoul/OU=jaeskim,yongjule/CN=localhost" && \
+  chmod 644 /theMyLovelyIntranet.localhost.*; \
+  mv /theMyLovelyIntranet.localhost.crt /etc/ssl/certs/;	\
+  mv /theMyLovelyIntranet.localhost.key /etc/ssl/private/;
+
+
+COPY ./nginx-app.conf /etc/nginx/conf.d

@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  intranet:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: intranet_service
+    volumes:
+      - "static:/usr/src/app/static"
+      - "media:/usr/src/app/media"
+    ports:
+      - "8000:8000"
+    expose:
+      - "8000"
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile-nginx
+    container_name: nginx_service
+    volumes:
+      - "static:/usr/src/app/static"
+      - "media:/usr/src/app/media"
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - intranet
+
+volumes:
+  static:
+  media:

@@ -23,12 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'rxeo_05w8_^+-w%hdh%u5fis(ju=-5smqwete5h%#&2b58&aa6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
-
-# TODO: 우리가 작성한 커스텀 유저로 치환해야 함!
-AUTH_USER_MODEL = 'auth.User'
+ALLOWED_HOSTS = ['localhost']
 
 # Application definition
 
@@ -109,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/seoul'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
